@@ -75,7 +75,10 @@ export default function HeroSection() {
           onLoadedData={() => setVideoLoaded(true)}
           className="hero-video absolute inset-0 w-full h-full"
         >
-          <source src="/videos/himalayan-sunrise.mp4" type="video/mp4" />
+          <source
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/videos/himalayan-sunrise.mp4`}
+            type="video/mp4"
+          />
         </video>
 
         {/* Fallback gradient when video is absent */}

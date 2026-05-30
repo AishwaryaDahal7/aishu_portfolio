@@ -146,7 +146,7 @@ export default function AboutSection() {
               className="relative w-full aspect-square max-w-[280px] mx-auto rounded-2xl overflow-hidden ring-2 ring-[rgba(245,158,11,0.35)] shadow-[0_8px_32px_rgba(245,158,11,0.15)]"
             >
               <Image
-                src="/photos/aishwarya.jpg"
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/photos/aishwarya.jpg`}
                 alt="Aishwarya Dahal"
                 fill
                 className="object-cover"
