@@ -17,7 +17,7 @@ const timeline: TimelineItem[] = [
     year: "2022",
     title: "Started Bachelor's Journey",
     description:
-      "Enrolled in a bachelor's program in Software Engineering / Computer Science, beginning a dedicated path into the world of technology and problem-solving.",
+      "Enrolled in a bachelor's program in Software Engineering , beginning a dedicated path into the world of technology and problem-solving.",
     icon: "🎓",
     status: "completed",
   },

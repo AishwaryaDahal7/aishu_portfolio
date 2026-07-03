@@ -85,8 +85,7 @@ export default function AboutSection() {
                 <span className="text-[#0F172A] font-medium">
                   Aishwarya Dahal
                 </span>
-                , a bachelor&apos;s student majoring in Software Engineering /
-                Computer Science. I&apos;m passionate about turning ideas into
+                , a bachelor&apos;s student majoring in Software Engineering. I&apos;m passionate about turning ideas into
                 clean, modern digital experiences that solve real problems.
               </p>
               <p>
