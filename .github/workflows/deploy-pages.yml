@@ -35,6 +35,8 @@ jobs:
 
       - name: Build static site
         run: npm run build
+        env:
+          BASE_PATH: /aishu_portfolio
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
