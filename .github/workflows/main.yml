@@ -15,7 +15,7 @@ jobs:
       LOCATION: southeastasia
       ADMIN: azureuser
       APP_DIR: /var/www/azure-cicd-app
-      SRC: /azure-ci-cd-pipeline
+      SRC: azure-demo-04/azure-ci-cd-pipeline
 
     steps:
       - uses: actions/checkout@v4
@@ -38,23 +38,17 @@ jobs:
               --generate-ssh-keys \
               --output none
             az vm open-port -g $RG -n $VM --port 80 --priority 300 --output none
+            echo "=== Waiting for VM agent ==="
+            for i in $(seq 1 30); do
+              az vm run-command invoke -g $RG -n $VM \
+                --command-id RunShellScript \
+                --scripts "echo ready" &>/dev/null && break
+              sleep 10
+            done
+            echo "VM ready"
           else
-            STATE=$(az vm show -g $RG -n $VM -d --query powerState -o tsv)
-            echo "VM state: $STATE"
-            if [ "$STATE" != "VM running" ]; then
-              echo "=== Starting VM ==="
-              az vm start -g $RG -n $VM --output none
-              echo "VM started"
-            fi
+            echo "VM already exists"
           fi
-          echo "=== Waiting for VM agent ==="
-          for i in $(seq 1 30); do
-            az vm run-command invoke -g $RG -n $VM \
-              --command-id RunShellScript \
-              --scripts "echo ready" &>/dev/null && break
-            sleep 10
-          done
-          echo "VM agent ready"
       - name: Get VM IP
         run: |
           echo "VM_IP=$(az vm show -g $RG -n $VM -d --query publicIps -o tsv)" >> $GITHUB_ENV
@@ -109,7 +103,7 @@ jobs:
           echo "=== Preparing index.html ==="
           SHORT_SHA="${GITHUB_SHA:0:7}"
           DEPLOY_TIME="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-          sed "s/__COMMIT_HASH__/$SHORT_SHA/g; s/__DEPLOY_TIME__/$DEPLOY_TIME/g" $SRC/aishu_portfolio > /tmp/aishu_portfolio
+          sed "s/__COMMIT_HASH__/$SHORT_SHA/g; s/__DEPLOY_TIME__/$DEPLOY_TIME/g" $SRC/index.html > /tmp/index_deploy.html
           echo "=== Uploading and swapping ==="
           B64=$(base64 -w0 /tmp/index_deploy.html)
           az vm run-command invoke -g $RG -n $VM \
